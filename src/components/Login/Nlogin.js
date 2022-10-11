@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useRef, useImperativeHandle } from "react";
 
 import classes from "./Login.module.css";
 
-const Nlogin = (props) => {
+const Nlogin = React.forwardRef((props, ref) => {
+  const inputRef = useRef();
+  const activate = () => {
+    inputRef.current.focus();
+  };
+
+  useImperativeHandle(ref, () => {
+    return {
+      do: activate,
+    };
+  });
   return (
     <div>
       <div
@@ -12,6 +22,7 @@ const Nlogin = (props) => {
       >
         <label htmlFor={props.id}>{props.label}</label>
         <input
+          ref={inputRef}
           type={props.type}
           id={props.email}
           value={props.value}
@@ -21,6 +32,6 @@ const Nlogin = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default Nlogin;
